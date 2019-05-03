@@ -1,0 +1,10 @@
+body {
+    /* background-color: steelblue; */
+}
+
+#container {
+    margin: 0 auto;
+    border: 2px solid grey;
+    width: 360px;
+    /* text-align: center; */
+} 
