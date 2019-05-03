@@ -100,3 +100,13 @@ var someObject = {
 };
 
 console.log(someObject.friends[0].name);
+console.table(someObject.friends);
+console.table(testTable1);
+
+
+// document.getElementById("superButton").addEventListener("click", function(){
+//     console.log("DUPAA");
+//     document.querySelector("body").classList.toggle("superBackgroud");
+// });
+
+
