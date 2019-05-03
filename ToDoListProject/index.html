@@ -5,24 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>ToDo list</title>
+    <!-- Font from googleFonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet"> 
 
     <!-- CSS -->
     <link rel="stylesheet" href="assets/css/stylesheet.css">
 
+    <!-- Font Awesome  -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
     <!-- jQuery -->
     <script type="text/javascript" src="assets/js/lib/jquery-3.4.1.min.js"></script>
+
+   
+
 
 </head>
 <body>
 
     <div id="container">
-        <h1>Todo list</h1>
-        <input type="text">
+        <h1>To-do list<span id="toggle-form"><i class="fas fa-plus-square"></i></span></h1>
+        <input type="text" placeholder="Add new todo">
 
         <ul>
-            <li><span>X</span> Go To Potion</li>
-            <li><span>X</span> GBye nue wdada</li>
-            <li><span>X</span> GVisit bals </li>
+            <li><span id="trashcan"><i class="fas fa-trash-alt"></i></span> Go To Potion</li>
+            <li><span id="trashcan"><i class="fas fa-trash-alt"></i></span> GBye nue wdada</li>
+            <li><span id="trashcan"><i class="fas fa-trash-alt"></i></span> GVisit bals </li>
         </ul>
 
     </div>
