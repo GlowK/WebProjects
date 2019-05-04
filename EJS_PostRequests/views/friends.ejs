@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Friends list goeas here</h1>
+     <% friends.forEach(function(friend){ %>
+        <li> I have a friend his/her name is <%= friend %></li>
+     <% }) %>
+
+    <form action="/addfriend" method="POST">
+        <input type="text" name="newFriend" placeholder="name">
+        <button>Add friend</button>
+    </form>
+
+</body>
+</html>
