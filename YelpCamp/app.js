@@ -4,7 +4,8 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const mongoose = require("mongoose");
-// const seedDb = require("./seeds");
+const methodOverride = require("method-override");
+//const seedDb = require("./seeds");
 
 // ============================
 // Requring routes 
@@ -19,9 +20,10 @@ var authRoutes          = require("./routes/auth");
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public")); //Static links 
 app.use(bodyParser.urlencoded({extended:true}));
+app.use(methodOverride("_method"));
 mongoose.connect("mongodb://localhost:27017/YelpCamp",{useNewUrlParser: true});
-
-// seedDb();
+mongoose.set('useFindAndModify', false); //potrzbne od uzycia findByIdAndUpdate (depricated)
+//seedDb();
 
 // ============================
 // Models
