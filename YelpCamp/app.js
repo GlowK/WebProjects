@@ -1,6 +1,7 @@
 const express = require("express");
 var app = express();
 const bodyParser = require("body-parser");
+const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const mongoose = require("mongoose");
@@ -24,6 +25,7 @@ app.use(methodOverride("_method"));
 mongoose.connect("mongodb://localhost:27017/YelpCamp",{useNewUrlParser: true});
 mongoose.set('useFindAndModify', false); //potrzbne od uzycia findByIdAndUpdate (depricated)
 //seedDb();
+app.use(flash());
 
 // ============================
 // Models
@@ -31,6 +33,8 @@ mongoose.set('useFindAndModify', false); //potrzbne od uzycia findByIdAndUpdate 
 //var Campground = require("./models/campground");
 //var Comment = require("./models/comment");
 var User = require("./models/user");
+
+
 
 // ============================
 // Passport configuration
@@ -48,10 +52,13 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // ============================
-// Passing currentUser check to every route
+// Passing currentUser check to every route 
+// Passing flash messages to every single page template
 // ============================
 app.use((req, res, next)=>{ 
     res.locals.currentUser = req.user;
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
     next();
 });
 

@@ -57,17 +57,18 @@ router.post("/login", passport.authenticate("local",
 //LOGOUT ROUTE
 router.get("/logout", (req, res) =>{
     req.logout();
+    req.flash("sucess", "You have log out sucessfuly.")
     res.redirect("/campgrounds");
 })
 
-//function checking is user logged in 
-function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }else{
-        res.redirect("/login");
-    }
-}
+// //function checking is user logged in 
+// function isLoggedIn(req, res, next){
+//     if(req.isAuthenticated()){
+//         return next();
+//     }else{
+//         res.redirect("/login");
+//     }
+// }
 
 // ============================
 // Basic setup - export
