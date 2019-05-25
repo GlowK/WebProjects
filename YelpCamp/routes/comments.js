@@ -44,11 +44,50 @@ router.post("/", isLoggedIn, (req, res) => {
                     foundCampground.comments.push(newComment);
                     foundCampground.save();
                     //console.log(newComment);
-                    res.redirect("/campground s/" + foundCampground._id);
+                    res.redirect("/campgrounds/" + foundCampground._id);
                 }
             });
         }
     });
+});
+
+// EDIT ROUT FOR COMMENT
+router.get("/:comment_id/edit", checkCommentOwnership, (req, res) => {
+    Campground.findById(req.params.id, (err, foundCampground) => {
+        if(err){
+            res.redirect("back");
+        }else{
+            Comment.findById(req.params.comment_id, (err, foundComment) => {
+                if(err){
+                    res.redirect("back");
+                }else{
+                    res.render("comments/edit", {campground: foundCampground, comment: foundComment});
+                }
+            })   
+        }
+    });
+});
+
+//UPDATE ROUTE FOR COMMENT
+router.put("/:comment_id", checkCommentOwnership, (req, res) => {
+    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, (err, updatedComment) =>{
+        if(err){
+            res.redirect("back");
+        }else{
+            res.redirect("/campgrounds/" + req.params.id);
+        }
+    })
+});
+
+//DESTROY ROUTE FOR COMMENT
+router.delete("/:comment_id", checkCommentOwnership, (req, res) => {
+    Comment.findByIdAndRemove(req.params.comment_id, (err) =>{
+        if(err){
+            res.redirect("back");
+        }else{
+            res.redirect("/campgrounds/" + req.params.id);
+        }
+    })
 });
 
 //function checking is user logged in 
@@ -58,6 +97,26 @@ function isLoggedIn(req, res, next){
     }else{
         res.redirect("/login");
     }
+}
+
+function checkCommentOwnership(req, res, next) {
+    if(req.isAuthenticated()){
+        Comment.findById(req.params.comment_id, (err, foundComment) =>{
+            if(err){
+                res.redirect("back");
+            }else{
+                //does user own this campground?
+                //Sprawdzamy czy autor jest taki sam jak zalogowany user
+                if(foundComment.author.id.equals(req.user._id)){
+                    next();
+                }else{
+                    res.redirect("back")
+                }
+            }
+        });
+    }else{
+        res.redirect("back");
+    } 
 }
 
 // ============================
