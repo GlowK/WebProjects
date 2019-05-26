@@ -15,7 +15,6 @@ var User = require("../models/user");
 // ROOT ROUTE
 router.get("/", (req, res) =>{
     res.render("landing");
-    //res.send("This will be a landing  page soon")
 })
 
 //AUTH ROUTES - more information about the campground
@@ -28,13 +27,15 @@ router.post("/register", (req, res) => {
     var newUser = new User({username: req.body.username});
     User.register(newUser, req.body.password,  (err, user) => {
         if(err){
-            console.log(err);
-            return res.render("register");
-        }else{
-            passport.authenticate("local")(req, res, () =>{
-                res.redirect("/campgrounds")
-            });
+            req.flash("error", err.message);
+            // Wazne zeby bylo redirect przy bledzie nie render. render nie sporwoduje
+            // ze wyswietli sie alert
+            return res.redirect("register");
         }
+            passport.authenticate("local")(req, res, () =>{
+                req.flash("success", "Welcome " + user.username);
+                res.redirect("/campgrounds")
+        });
     });
 });
 
@@ -57,18 +58,9 @@ router.post("/login", passport.authenticate("local",
 //LOGOUT ROUTE
 router.get("/logout", (req, res) =>{
     req.logout();
-    req.flash("sucess", "You have log out sucessfuly.")
+    req.flash("success", "You have log out sucessfuly.")
     res.redirect("/campgrounds");
 })
-
-// //function checking is user logged in 
-// function isLoggedIn(req, res, next){
-//     if(req.isAuthenticated()){
-//         return next();
-//     }else{
-//         res.redirect("/login");
-//     }
-// }
 
 // ============================
 // Basic setup - export

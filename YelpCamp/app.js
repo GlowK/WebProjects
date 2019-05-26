@@ -30,8 +30,8 @@ app.use(flash());
 // ============================
 // Models
 // ============================
-//var Campground = require("./models/campground");
-//var Comment = require("./models/comment");
+var Campground = require("./models/campground");
+var Comment = require("./models/comment");
 var User = require("./models/user");
 
 
