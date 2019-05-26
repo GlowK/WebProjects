@@ -21,7 +21,7 @@ router.get("/", (req, res) =>{
             console.log(err);
         }else{
             // Render the campgrounds
-            res.render("campgrounds/index", {campgrounds: allCampgrounds});
+            res.render("campgrounds/index", {campgrounds: allCampgrounds, page: "campgrounds"});
         }
     }); 
 });

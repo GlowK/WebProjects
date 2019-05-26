@@ -18,8 +18,9 @@ router.get("/", (req, res) =>{
 })
 
 //AUTH ROUTES - more information about the campground
+//Register form
 router.get("/register", (req, res) => {
-    res.render("register");
+    res.render("register", {page: "register"});
 });
 
 //handle sign up logic
@@ -27,13 +28,13 @@ router.post("/register", (req, res) => {
     var newUser = new User({username: req.body.username});
     User.register(newUser, req.body.password,  (err, user) => {
         if(err){
-            req.flash("error", err.message);
+            req.flash("error", {error: err.message});
             // Wazne zeby bylo redirect przy bledzie nie render. render nie sporwoduje
             // ze wyswietli sie alert
             return res.redirect("register");
         }
             passport.authenticate("local")(req, res, () =>{
-                req.flash("success", "Welcome " + user.username);
+                req.flash("success", "Welcome " + req.body.username);
                 res.redirect("/campgrounds")
         });
     });
@@ -41,7 +42,7 @@ router.post("/register", (req, res) => {
 
 //LOGIN ROUTE
 router.get("/login", (req, res) => {
-    res.render("login");
+    res.render("login", {page: "login"});
 });
 
 //handlign login logic
